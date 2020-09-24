@@ -3,7 +3,6 @@ const { User } = require('../models/User');
 
 module.exports.createExercise = (req, res) => {
     const { description, userId, duration, date } = req.body;
-    console.log(req.body)
     const exercise = new Exercise({description, duration, date, userId})
     exercise.save()
         .then(result => {

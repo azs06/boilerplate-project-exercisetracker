@@ -2,7 +2,6 @@ const  { User } = require('../models/User')
 
 module.exports.createUser = (req, res) => {
     const { username } = req.body
-    console.log(req.body)
     const user = new User({username})
     user.save()
         .then(result => {
@@ -23,3 +22,18 @@ module.exports.getUser = (req, res) => {
         res.status(500).json({ error });
       });
   };
+
+  module.exports.getUsers = (req, res) => {
+    User.find()
+      .then(result => {
+        const users = result.map(user => {
+          return {
+            _id: user._id, username: user.username
+          }
+        })
+        return res.json(users)
+      })
+      .catch(error => {
+        return res.status(500).json(error)
+      })
+  }

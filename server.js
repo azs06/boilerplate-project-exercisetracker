@@ -3,8 +3,9 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
-const { createUser, getUser } = require('./controllers/user_controller')
+const { createUser, getUser, getUsers } = require('./controllers/user_controller')
 const { createExercise } = require('./controllers/exercise_controller')
+const { log } = require('./controllers/log_controller')
 
 const mongoose = require('mongoose')
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/exercise-track' )
@@ -25,8 +26,9 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/exercise/new-user', createUser)
-
 app.post('/api/exercise/add', createExercise)
+app.get('/api/exercise/log', log)
+app.get('/api/exercise/users', getUsers)
 
 // Not found middleware
 app.use((req, res, next) => {
