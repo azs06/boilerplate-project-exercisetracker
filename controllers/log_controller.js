@@ -26,7 +26,9 @@ module.exports.log = (req, res) => {
                 .then((userData) => {
                     const { username } = userData;
                     const count = result.length;
-                    const log = result.map(logData => {
+                    const log = result
+                    .sort((firstExercise, secondExercise) => new Date(firstExercise.date) > new Date(secondExercise.date))
+                    .map(logData => {
                         return {
                             description: logData.description,
                             duration: logData.duration,
