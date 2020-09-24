@@ -10,10 +10,10 @@ module.exports.log = (req, res) => {
     const _id = ObjectId(userId);
     const dateFilter = {};
     if(to){
-        dateFilter.$gte = new Date(from).toISOString();
+        dateFilter.$lte = new Date(to).toISOString();
     }
     if(from){
-        dateFilter.$lte = new Date(to).toISOString();
+        dateFilter.$gte = new Date(from).toISOString();
     }
     const filter = {userId: _id};
     if(Object.values(dateFilter).length > 0){
@@ -30,7 +30,7 @@ module.exports.log = (req, res) => {
                         return {
                             description: logData.description,
                             duration: logData.duration,
-                            date: logData.date
+                            date: new Date(logData.date).toDateString()
                         }
                     })
                     res.json({
